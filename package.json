@@ -1,0 +1,22 @@
+{
+  "name": "diamate-be",
+  "version": "1.0.0",
+  "description": "Backend of diamate",
+  "main": "main.ts",
+  "author": "Al Farizi Dwi Prasetyo",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/hapi": "^21.4.0",
+    "dotenv": "^16.4.7"
+  },
+  "scripts": {
+    "dev": "tsx --watch src/main.ts",
+    "build": "tsc",
+    "start": "node dist/main.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
