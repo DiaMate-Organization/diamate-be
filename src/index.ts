@@ -1,8 +1,10 @@
 import Hapi from "@hapi/hapi";
-import config from "./config";
 import routes from "./routes";
+import { getConfig } from "./config";
 
 export const initServer = async () => {
+  const config = getConfig();
+
   const server = Hapi.server({
     port: config.port,
     host: "0.0.0.0",

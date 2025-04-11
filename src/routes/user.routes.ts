@@ -3,7 +3,7 @@ import { registerHandler } from "../handlers/user.handlers";
 
 const userRoutes: ServerRoute[] = [
   {
-    method: "GET",
+    method: "POST",
     path: "/register",
     handler: registerHandler,
   },
