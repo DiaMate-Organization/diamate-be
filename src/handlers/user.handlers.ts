@@ -1,5 +1,6 @@
 import { Request, ResponseObject, ResponseToolkit } from "@hapi/hapi";
 import { supabase } from "../config/supabase";
+import { registerUser } from "../services/user.services";
 
 export const registerHandler = async (
   request: Request,
@@ -10,11 +11,11 @@ export const registerHandler = async (
     password: string;
   };
 
-  const { data, error } = await supabase.auth.signUp({ email, password });
-
-  if (error) {
-    return h.response({ error: error.message }).code(400);
+  try {
+    const newUser = await registerUser(email, password);
+    return h.response({ user: newUser.user }).code(200);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : JSON.stringify(err);
+    return h.response({ error: message }).code(400);
   }
-
-  return h.response({ user: data.user }).code(200);
 };
