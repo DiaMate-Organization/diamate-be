@@ -1,6 +1,7 @@
 import Hapi from "@hapi/hapi";
 import routes from "./routes";
 import { getConfig } from "./config";
+import { registerLoggingMiddleware } from "./middlewares/logger";
 
 export const initServer = async () => {
   const config = getConfig();
@@ -11,6 +12,7 @@ export const initServer = async () => {
   });
 
   server.route(routes);
+  await registerLoggingMiddleware(server);
 
   await server.start();
   console.log(`Server running on ${server.info.uri}`);
