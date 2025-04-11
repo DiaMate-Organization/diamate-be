@@ -1,13 +1,6 @@
 import { ServerRoute } from "@hapi/hapi";
+import userRoutes from "./user.routes";
 
-const routes: ServerRoute[] = [
-  {
-    method: "GET",
-    path: "/",
-    handler: () => {
-      return { message: "Hello from Hapi + TSX!" };
-    },
-  },
-];
+const routes: ServerRoute[] = [...userRoutes];
 
 export default routes;
