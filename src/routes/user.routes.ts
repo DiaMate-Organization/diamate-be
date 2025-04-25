@@ -1,11 +1,16 @@
 import { ServerRoute } from "@hapi/hapi";
-import { registerHandler } from "../handlers/user.handlers";
+import { loginHandler, registerHandler } from "../handlers/user.handlers";
 
 const userRoutes: ServerRoute[] = [
   {
-    method: "GET",
+    method: "POST",
     path: "/register",
     handler: registerHandler,
+  },
+  {
+    method: "POST",
+    path: "/login",
+    handler: loginHandler,
   },
 ];
 

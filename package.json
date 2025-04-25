@@ -7,7 +7,9 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/hapi": "^21.4.0",
-    "dotenv": "^16.4.7"
+    "@supabase/supabase-js": "^2.49.4",
+    "dotenv": "^16.4.7",
+    "winston": "^3.17.0"
   },
   "scripts": {
     "dev": "tsx --watch src/main.ts",

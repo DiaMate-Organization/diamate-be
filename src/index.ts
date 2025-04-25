@@ -1,14 +1,18 @@
 import Hapi from "@hapi/hapi";
-import config from "./config";
 import routes from "./routes";
+import { getConfig } from "./config";
+import { registerLoggingMiddleware } from "./middlewares/logger";
 
 export const initServer = async () => {
+  const config = getConfig();
+
   const server = Hapi.server({
     port: config.port,
     host: "0.0.0.0",
   });
 
   server.route(routes);
+  await registerLoggingMiddleware(server);
 
   await server.start();
   console.log(`Server running on ${server.info.uri}`);
