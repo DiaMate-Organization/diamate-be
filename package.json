@@ -8,7 +8,9 @@
   "dependencies": {
     "@hapi/hapi": "^21.4.0",
     "@supabase/supabase-js": "^2.49.4",
-    "bcrypt": "^5.1.1",
+    "@tensorflow/tfjs-layers": "^4.22.0",
+    "@tensorflow/tfjs-node": "4.22.0",
+    "bcrypt": "^6.0.0",
     "dotenv": "^16.4.7",
     "jsonwebtoken": "^9.0.2",
     "winston": "^3.17.0"
