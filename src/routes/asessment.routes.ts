@@ -1,0 +1,32 @@
+import { Request, ResponseToolkit, ServerRoute } from "@hapi/hapi";
+import { authMiddleware } from "../middlewares/auth";
+import { diabetesFeaturesSchema } from "../validations";
+import { createAssessmentHandler } from "../handlers/assessment.handlers";
+
+export const assessmentRoutes: ServerRoute[] = [
+  {
+    method: "POST",
+    path: "/assessment",
+    options: {
+      pre: [{ method: authMiddleware }],
+      validate: {
+        payload: diabetesFeaturesSchema,
+        failAction: (req: Request, h: ResponseToolkit, err) => {
+          const message =
+            err instanceof Error ? err.message : JSON.stringify(err);
+
+          return h.response({ error: true, message }).code(400).takeover();
+        },
+      },
+    },
+    handler: createAssessmentHandler,
+  },
+  {
+    method: "GET",
+    path: "/assessment",
+    options: {
+      pre: [{ method: authMiddleware }],
+    },
+    handler: () => {},
+  },
+];
