@@ -20,6 +20,7 @@ export const initServer = async () => {
   server.route(routes);
   await registerLoggingMiddleware(server);
 
+  // Cek Model
   await mainPredict()
 
   await server.start();

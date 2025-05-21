@@ -12,18 +12,19 @@ export async function loadModel() {
 }
 
 function dummyScaler(features: number[]): number[] {
-  return features.map((f) => f / 10);
+  const maxValues = [1, 1, 50, 1, 1, 1, 1, 1, 5, 30, 1, 1, 13, 6, 8];
+  return features.map((f, i) => f / maxValues[i]);
 }
 
 function padFeatures(x: number[], targetDim: number): tf.Tensor4D {
   const targetLength = targetDim * targetDim;
-  if (x.length > targetLength) {
-    throw new Error('Target dimension terlalu kecil untuk jumlah fitur');
-  }
+  if (x.length > targetLength) throw new Error("Target dimension terlalu kecil");
+
   const padded = new Array(targetLength).fill(0);
   for (let i = 0; i < x.length; i++) {
     padded[i] = x[i];
   }
+
   return tf.tensor4d(padded, [1, targetDim, targetDim, 1]);
 }
 
@@ -57,21 +58,21 @@ export async function mainPredict() {
   const model = await loadModel();
 
   const dummyInput = {
-    HighBP: 1,              
-    HighChol: 1,             
-    BMI: 24,                 
-    Stroke: 1,               
-    HeartDiseaseorAttack: 1,
-    PhysActivity: 1,        
-    HvyAlcoholConsump: 1,    
-    AnyHealthcare: 0,        
-    GenHlth: 5,             
-    PhysHlth: 5,             
-    DiffWalk: 1,             
-    Sex: 1,                  
-    Age: 50,                  
-    Education: 2,           
-    Income: 1                
+    "HighBP": 1,               // tekanan darah tinggi
+    "HighChol": 0,            // kolesterol normal
+    "BMI": 29,                // BMI sedang (berisiko tapi tidak ekstrem)
+    "Stroke": 0,              // tidak pernah stroke
+    "HeartDiseaseorAttack": 0, // tidak punya riwayat jantung
+    "PhysActivity": 1,        // rutin aktif fisik
+    "HvyAlcoholConsump": 0,   // tidak konsumsi alkohol berlebihan
+    "AnyHealthcare": 1,       // akses layanan kesehatan
+    "GenHlth": 3,             // kondisi kesehatan cukup
+    "PhysHlth": 5,            // hari masalah fisik sedikit
+    "DiffWalk": 0,            // tidak kesulitan jalan
+    "Sex": 1,                 // jenis kelamin laki-laki (atau perempuan, tergantung data)
+    "Age": 8,                 // kelompok usia sekitar 35-39 (sesuaikan skala)
+    "Education": 4,           // pendidikan menengah ke atas
+    "Income": 4               // pendapatan sedang
   };
 
   const targetDim = 4;
@@ -80,9 +81,11 @@ export async function mainPredict() {
 
   console.log(`Prediksi risiko diabetes (probabilitas): ${prob.toFixed(4)}`);
 
-  if (prob > 0.5) {
-    console.log('Risiko diabetes: Sedang/Tinggi');
-  } else {
+  if (prob < 0.3) {
     console.log('Risiko diabetes: Rendah');
+  } else if (prob < 0.6) {
+    console.log('Risiko diabetes: Sedang');
+  } else {
+    console.log('Risiko diabetes: Tinggi');
   }
 }
