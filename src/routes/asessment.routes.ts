@@ -3,6 +3,7 @@ import { authMiddleware } from "../middlewares/auth";
 import { diabetesFeaturesSchema } from "../validations";
 import {
   createAssessmentHandler,
+  deleteAssessmentHandler,
   getAllAssessmentsHandler,
   getAssessmentHandler,
 } from "../handlers/assessment.handlers";
@@ -40,5 +41,13 @@ export const assessmentRoutes: ServerRoute[] = [
       pre: [{ method: authMiddleware }],
     },
     handler: getAssessmentHandler,
+  },
+  {
+    method: "DELETE",
+    path: "/assessment/{id}",
+    options: {
+      pre: [{ method: authMiddleware }],
+    },
+    handler: deleteAssessmentHandler,
   },
 ];

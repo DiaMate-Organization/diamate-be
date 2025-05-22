@@ -40,3 +40,15 @@ export const getAllAssessments = async (
 
   return data;
 };
+
+export const deleteAssessment = async (id: string): Promise<Assessment[]> => {
+  const { data, error } = await supabase
+    .from("assessments")
+    .delete()
+    .eq("id", id)
+    .select();
+
+  if (error) throw new Error(error.message);
+
+  return data;
+};

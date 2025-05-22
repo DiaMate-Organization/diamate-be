@@ -3,6 +3,7 @@ import { detectRiskFactors, predictDiabetes } from "../services/ml.services";
 import { DiabetesFeatures } from "../types/ml";
 import {
   createAssessment,
+  deleteAssessment,
   getAllAssessments,
   getAssesment,
 } from "../services/assessment.services";
@@ -95,6 +96,28 @@ export const getAssessmentHandler = async (
         data,
         error: false,
         message: "Assessments retrieved successfully",
+      })
+      .code(200);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : JSON.stringify(err);
+    return h.response({ error: true, message }).code(400);
+  }
+};
+
+export const deleteAssessmentHandler = async (
+  request: Request,
+  h: ResponseToolkit
+) => {
+  try {
+    const { id } = request.params;
+
+    const data = await deleteAssessment(id);
+
+    return h
+      .response({
+        data,
+        error: false,
+        message: "Assessments deleted successfully",
       })
       .code(200);
   } catch (err) {
