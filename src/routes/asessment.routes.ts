@@ -1,7 +1,11 @@
 import { Request, ResponseToolkit, ServerRoute } from "@hapi/hapi";
 import { authMiddleware } from "../middlewares/auth";
 import { diabetesFeaturesSchema } from "../validations";
-import { createAssessmentHandler } from "../handlers/assessment.handlers";
+import {
+  createAssessmentHandler,
+  getAllAssessmentsHandler,
+  getAssessmentHandler,
+} from "../handlers/assessment.handlers";
 
 export const assessmentRoutes: ServerRoute[] = [
   {
@@ -27,6 +31,14 @@ export const assessmentRoutes: ServerRoute[] = [
     options: {
       pre: [{ method: authMiddleware }],
     },
-    handler: () => {},
+    handler: getAllAssessmentsHandler,
+  },
+  {
+    method: "GET",
+    path: "/assessment/{id}",
+    options: {
+      pre: [{ method: authMiddleware }],
+    },
+    handler: getAssessmentHandler,
   },
 ];

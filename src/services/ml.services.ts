@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs-node";
-import { DiabetesPrediction } from "../types/ml";
+import { DiabetesFeatures, DiabetesPrediction } from "../types/ml";
 
 export async function loadModel() {
   try {
@@ -71,4 +71,26 @@ export async function predictDiabetes(
     risk,
     probability,
   };
+}
+
+export function detectRiskFactors(input: DiabetesFeatures): string[] {
+  const risks: string[] = [];
+
+  if (input.HighBP === 1) risks.push("High Blood Pressure");
+  if (input.HighChol === 1) risks.push("High Cholesterol");
+  if (input.BMI >= 30) risks.push("Obesity");
+  if (input.Stroke === 1) risks.push("History of Stroke");
+  if (input.HeartDiseaseorAttack === 1) risks.push("Heart Disease or Attack");
+  if (input.PhysActivity === 0) risks.push("Physical Inactivity");
+  if (input.HvyAlcoholConsump === 1) risks.push("Heavy Alcohol Consumption");
+  if (input.AnyHealthcare === 0) risks.push("No Healthcare Access");
+  if (input.GenHlth >= 4) risks.push("Poor General Health");
+  if (input.PhysHlth >= 15) risks.push("Frequent Physical Health Problems");
+  if (input.DiffWalk === 1) risks.push("Difficulty Walking");
+  if (input.Sex === 1) risks.push("Male");
+  if (input.Age >= 10) risks.push("Older Age");
+  if (input.Education <= 2) risks.push("Low Education Level");
+  if (input.Income <= 2) risks.push("Low Income");
+
+  return risks;
 }
