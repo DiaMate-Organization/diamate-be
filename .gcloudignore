@@ -1,0 +1,11 @@
+# This file specifies files that are _not_ uploaded to Google Cloud
+ 
+# Ignore Git-related files
+.git
+.gitignore
+ 
+# Node.js dependencies
+node_modules/
+ 
+# Include sensitive files explicitly
+!.env
