@@ -5,6 +5,13 @@ import { assessmentRoutes } from "./asessment.routes";
 import { chatbotRoutes } from "./chatbot.routes";
 
 const routes: ServerRoute[] = [
+  {
+    method: "GET",
+    path: "/",
+    handler: (request, h) => {
+      return h.response({ message: "Welcome to diamate api" }).code(200);
+    },
+  },
   ...userRoutes,
   ...articleRoutes,
   ...assessmentRoutes,
