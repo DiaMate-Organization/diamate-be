@@ -17,3 +17,18 @@ export const diabetesFeaturesSchema = Joi.object({
   Education: Joi.number().min(1).max(6).required(),
   Income: Joi.number().min(1).max(8).required(),
 });
+
+export const chatRequestSchema = Joi.object({
+  content: Joi.string().min(3).max(500).required().messages({
+    "string.base": "Pesan harus berupa teks.",
+    "string.empty": "Pesan tidak boleh kosong.",
+    "string.min": "Pesan terlalu pendek, minimal 3 karakter.",
+    "string.max": "Pesan terlalu panjang, maksimal 500 karakter.",
+    "any.required": "Pesan wajib diisi.",
+  }),
+  role: Joi.string().valid("user", "assistant", "system").required().messages({
+    "any.only":
+      "Role harus salah satu dari 'user', 'assistant', atau 'system'.",
+    "any.required": "Role wajib diisi.",
+  }),
+});

@@ -10,8 +10,10 @@
     "@supabase/supabase-js": "^2.49.4",
     "@tensorflow/tfjs-layers": "^4.22.0",
     "@tensorflow/tfjs-node": "4.22.0",
+    "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^16.4.7",
+    "groq-sdk": "^0.22.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "winston": "^3.17.0"

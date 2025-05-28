@@ -6,6 +6,7 @@
  
 # Node.js dependencies
 node_modules/
+dist
  
 # Include sensitive files explicitly
 !.env
