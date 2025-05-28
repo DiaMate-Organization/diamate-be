@@ -10,8 +10,11 @@
     "@supabase/supabase-js": "^2.49.4",
     "@tensorflow/tfjs-layers": "^4.22.0",
     "@tensorflow/tfjs-node": "4.22.0",
+    "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^16.4.7",
+    "groq-sdk": "^0.22.0",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "winston": "^3.17.0"
   },
@@ -22,8 +25,11 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.14.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.4",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   }
