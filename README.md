@@ -23,6 +23,7 @@ PORT=5000
 SUPABASE_URL=https://your-supabase-url.supabase.co
 SUPABASE_ANON_KEY=your-supabase-anon-key
 JWT_SECRET=your-jwt-secret
+GROQ_API_KEY=your-groq-api-key
 ```
 
 ---
