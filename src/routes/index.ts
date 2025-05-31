@@ -3,6 +3,7 @@ import userRoutes from "./user.routes";
 import articleRoutes from "./article.routes";
 import { assessmentRoutes } from "./asessment.routes";
 import { chatbotRoutes } from "./chatbot.routes";
+import overviewRoutes from "./overview.routes";
 
 const routes: ServerRoute[] = [
   {
@@ -16,6 +17,7 @@ const routes: ServerRoute[] = [
   ...articleRoutes,
   ...assessmentRoutes,
   ...chatbotRoutes,
+  ...overviewRoutes,
 ];
 
 export default routes;
