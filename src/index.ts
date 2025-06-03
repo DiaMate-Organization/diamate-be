@@ -12,7 +12,7 @@ export const initServer = async () => {
     host: "0.0.0.0",
     routes: {
       cors: {
-        origin: [config.frontendOrigin],
+        origin: [config.frontendOrigin, "http://localhost:3000"],
       },
     },
   });
