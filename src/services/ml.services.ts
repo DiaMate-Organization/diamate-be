@@ -1,7 +1,7 @@
 import * as tf from "@tensorflow/tfjs-node";
 import { DiabetesFeatures, DiabetesPrediction } from "../types/ml";
 
-export async function loadModel() {
+export async function loadModel(): Promise<tf.LayersModel> {
   try {
     const model = await tf.loadLayersModel("file://ml_model/model.json");
     console.log("\nModel loaded successfully!");
@@ -12,55 +12,52 @@ export async function loadModel() {
   }
 }
 
-function scaler(features: number[]): number[] {
-  const maxValues = [1, 1, 50, 1, 1, 1, 1, 1, 5, 30, 1, 1, 13, 6, 8];
-  return features.map((f, i) => f / maxValues[i]);
+const featureOrder = [
+  "HighBP",
+  "HighChol",
+  "BMI",
+  "HeartDiseaseorAttack",
+  "GenHlth",
+  "PhysHlth",
+  "DiffWalk",
+  "Age",
+  "Education",
+  "Income",
+];
+
+const meanValues = {
+  BMI: 28.0,
+  PhysHlth: 10.0,
+};
+
+const stdValues = {
+  BMI: 5.0,
+  PhysHlth: 8.0,
+};
+
+function standardScale(value: number, mean: number, std: number): number {
+  return (value - mean) / std;
 }
 
-function padFeatures(x: number[], targetDim: number): tf.Tensor4D {
-  const targetLength = targetDim * targetDim;
-  if (x.length > targetLength)
-    throw new Error("Target dimension terlalu kecil");
+function scaler(features: Record<string, number>): number[] {
+  return featureOrder.map((key) => {
+    const val = features[key];
+    if (val === undefined) throw new Error(`Missing feature ${key}`);
 
-  const padded = new Array(targetLength).fill(0);
-  for (let i = 0; i < x.length; i++) {
-    padded[i] = x[i];
-  }
+    if (key === "BMI") return standardScale(val, meanValues.BMI, stdValues.BMI);
+    if (key === "PhysHlth")
+      return standardScale(val, meanValues.PhysHlth, stdValues.PhysHlth);
 
-  return tf.tensor4d(padded, [1, targetDim, targetDim, 1]);
+    return val;
+  });
 }
 
 export async function predictDiabetes(
   model: tf.LayersModel,
   features: Record<string, number>
 ): Promise<DiabetesPrediction> {
-  const featureOrder = [
-    "HighBP",
-    "HighChol",
-    "BMI",
-    "Stroke",
-    "HeartDiseaseorAttack",
-    "PhysActivity",
-    "HvyAlcoholConsump",
-    "AnyHealthcare",
-    "GenHlth",
-    "PhysHlth",
-    "DiffWalk",
-    "Sex",
-    "Age",
-    "Education",
-    "Income",
-  ];
-
-  const featureArray = featureOrder.map((key) => {
-    if (!(key in features)) throw new Error(`Missing feature: ${key}`);
-    return features[key];
-  });
-
-  const scaled = scaler(featureArray);
-
-  const inputTensor = padFeatures(scaled, 4);
-
+  const scaledFeatures = scaler(features);
+  const inputTensor = tf.tensor2d([scaledFeatures], [1, scaledFeatures.length]);
   const predictionTensor = model.predict(inputTensor) as tf.Tensor;
   const probability = (await predictionTensor.data())[0];
 
@@ -79,18 +76,12 @@ export function detectRiskFactors(input: DiabetesFeatures): string[] {
   if (input.HighBP === 1) risks.push("High Blood Pressure");
   if (input.HighChol === 1) risks.push("High Cholesterol");
   if (input.BMI >= 30) risks.push("Obesity");
-  if (input.Stroke === 1) risks.push("History of Stroke");
   if (input.HeartDiseaseorAttack === 1) risks.push("Heart Disease or Attack");
-  if (input.PhysActivity === 0) risks.push("Physical Inactivity");
-  if (input.HvyAlcoholConsump === 1) risks.push("Heavy Alcohol Consumption");
-  if (input.AnyHealthcare === 0) risks.push("No Healthcare Access");
   if (input.GenHlth >= 4) risks.push("Poor General Health");
   if (input.PhysHlth >= 15) risks.push("Frequent Physical Health Problems");
   if (input.DiffWalk === 1) risks.push("Difficulty Walking");
-  if (input.Sex === 1) risks.push("Male");
   if (input.Age >= 10) risks.push("Older Age");
-  if (input.Education <= 2) risks.push("Low Education Level");
-  if (input.Income <= 2) risks.push("Low Income");
+  if (input.Education <= 1) risks.push("Low Education Level");
 
   return risks;
 }

@@ -40,7 +40,8 @@ export const createAssessmentHandler = async (
 
     return h
       .response({
-        data,
+        ...data,
+        probability: resultPredict.probability,
         error: false,
         message: "Assessment created successfully",
       })
