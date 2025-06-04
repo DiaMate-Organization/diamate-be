@@ -19,7 +19,7 @@ export const chatbotHandler = async (
       - **Dashboard pemantauan**: Melacak kondisi dan kebiasaan harian.
       - **Rekomendasi aktivitas**: Saran praktis untuk gaya hidup sehat.
     - **Tujuan**: Membantu pengguna mengenali risiko diabetes, mendorong pencegahan, dan meningkatkan kesadaran kesehatan.
-    - **Pencipta**: Dibuat oleh tim mahasiswa dari 4 universitas: Universitas Udayana, STMIK Tunas Bangsa, Universitas Muhammadiyah Cirebon, dan Universitas Gunadarma. Timnya terdiri dari:
+    - **Pencipta**: Dibuat oleh tim mahasiswa dari 4 universitas: Universitas Udayana, STMIK Triguna Dharma, Universitas Muhammadiyah Cirebon, dan Universitas Gunadarma. Timnya terdiri dari:
       - Ridho Bintang Aulia (Project Manager)
       - Al Farizi Dwi Prasetyo (Fullstack Developer)
       - Muhammad Faiz (Fullstack Developer)
