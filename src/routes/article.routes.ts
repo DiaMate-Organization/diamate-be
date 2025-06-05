@@ -1,12 +1,19 @@
 import { ServerRoute } from "@hapi/hapi";
-import { getAllArticlesHandler } from "../handlers/article.handlers";
-// import { loginHandler, registerHandler } from "../handlers/user.handlers";
+import {
+  getAllArticlesHandler,
+  getArticleHandler,
+} from "../handlers/article.handlers";
 
 const articleRoutes: ServerRoute[] = [
   {
     method: "GET",
     path: "/article",
     handler: getAllArticlesHandler,
+  },
+  {
+    method: "GET",
+    path: "/article/{slug}",
+    handler: getArticleHandler,
   },
 ];
 
