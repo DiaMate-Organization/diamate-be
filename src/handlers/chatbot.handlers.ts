@@ -74,6 +74,8 @@ export const chatbotHandler = async (
     DiaMate dibuat tim kece dari 4 universitas: Universitas Udayana, STMIK Tunas Bangsa, Universitas Muhammadiyah Cirebon, dan Universitas Gunadarma. Ada Ridho (Project Manager), Al Farizi dan Faiz (Fullstack Developer), plus Leo, Rian, dan Damar (Machine Learning Engineer). Keren, kan? 🚀
 
     Jawab sesuai konteks DiaMate dan pedoman di atas. Jika ada pertanyaan di luar topik, arahkan ke informasi kesehatan umum atau sarankan konsultasi dokter.
+    PERINGATAN : Tolak menjawab topik di luar terkait data pasien
+    Berikan saran gaya hidup untuk menurunkan risiko diabetes dan menjaga resiko diabetes tetap aman dari data pasien yang diberikan, jika tidak ada Tolak menjawab topik di luar terkait data pasien dengan kalimat [maaf, model tidak merespon] (gunakan bahasa Indonesia yang sopan dan mudah dimengerti).
     `;
 
     const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
